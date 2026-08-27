@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #F2F2ED;
+  color: #002C48;
+  font-family: 'Inter', sans-serif;
+}
+
+a { color: inherit; }
+
+/* ---------- Nav ---------- */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 22px 24px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #002C48;
+}
+.nav-brand img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.nav-brand span {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+.nav-links {
+  display: flex;
+  gap: 22px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #4E5257;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: #1554B8;
+}
+
+/* ---------- Page shell ---------- */
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 24px 48px;
+}
+.wrap.wide {
+  max-width: 760px;
+}
+.center {
+  text-align: center;
+}
+
+/* ---------- Hero ---------- */
+.logo {
+  width: 88px;
+  height: 88px;
+  border-radius: 18px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+}
+h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 40px 0 6px;
+}
+.tagline {
+  font-size: 16px;
+  color: #4E5257;
+  margin: 0 0 40px;
+  line-height: 1.5;
+}
+p {
+  line-height: 1.6;
+  color: #4E5257;
+}
+
+/* ---------- Cards ---------- */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+.card {
+  display: block;
+  background: #FFFFFF;
+  border: 1px solid #D2D2CB;
+  border-radius: 10px;
+  padding: 20px 22px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease;
+}
+.card:hover {
+  border-color: #1554B8;
+}
+.card-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #686C72;
+  margin-bottom: 4px;
+}
+.card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.card-desc {
+  font-size: 14px;
+  color: #4E5257;
+  line-height: 1.5;
+}
+.card-arrow {
+  color: #1554B8;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+}
+
+/* ---------- Feature list ---------- */
+.feature {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #D2D2CB;
+  text-align: left;
+}
+.feature:last-child { border-bottom: none; }
+.feature-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #1554B8;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+.feature-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 3px;
+}
+.feature-desc {
+  font-size: 14px;
+  color: #4E5257;
+  line-height: 1.5;
+}
+
+/* ---------- CTA button ---------- */
+.cta {
+  display: inline-block;
+  background: #002C48;
+  color: #FFFFFF;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 13px 26px;
+  border-radius: 6px;
+  margin-top: 24px;
+}
+
+footer {
+  margin-top: 56px;
+  font-size: 13px;
+  color: #686C72;
+  text-align: center;
+}
+footer a {
+  color: #1554B8;
+  text-decoration: none;
+}

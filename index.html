@@ -6,101 +6,23 @@
     <meta name="theme-color" content="#F2F2ED" />
     <title>Atlas — Find Your Next Game</title>
     <link rel="icon" type="image/jpeg" href="logo.jpg" />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
-
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        background: #F2F2ED;
-        color: #002C48;
-        font-family: 'Inter', sans-serif;
-      }
-      .wrap {
-        max-width: 640px;
-        margin: 0 auto;
-        padding: 64px 24px 48px;
-        text-align: center;
-      }
-      .logo {
-        width: 88px;
-        height: 88px;
-        border-radius: 18px;
-        object-fit: cover;
-        margin-bottom: 20px;
-      }
-      h1 {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 36px;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-        margin: 0 0 8px;
-      }
-      .tagline {
-        font-size: 16px;
-        color: #4E5257;
-        margin: 0 0 40px;
-        line-height: 1.5;
-      }
-      .cards {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-        text-align: left;
-      }
-      .card {
-        display: block;
-        background: #FFFFFF;
-        border: 1px solid #D2D2CB;
-        border-radius: 10px;
-        padding: 20px 22px;
-        text-decoration: none;
-        color: inherit;
-        transition: border-color 0.15s ease;
-      }
-      .card:hover {
-        border-color: #1554B8;
-      }
-      .card-label {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: #686C72;
-        margin-bottom: 4px;
-      }
-      .card-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 4px;
-      }
-      .card-desc {
-        font-size: 14px;
-        color: #4E5257;
-        line-height: 1.5;
-      }
-      .card-arrow {
-        color: #1554B8;
-        font-weight: 600;
-        font-size: 14px;
-        margin-top: 10px;
-        display: block;
-      }
-      footer {
-        margin-top: 56px;
-        font-size: 13px;
-        color: #686C72;
-      }
-      footer a {
-        color: #1554B8;
-        text-decoration: none;
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="wrap">
+    <nav class="nav">
+      <a class="nav-brand" href="index.html">
+        <img src="logo.jpg" alt="Atlas" />
+        <span>Atlas</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="players.html">Players</a>
+        <a href="owners.html">Field Owners</a>
+        <a href="about.html">About</a>
+      </div>
+    </nav>
+
+    <div class="wrap center">
       <img class="logo" src="logo.jpg" alt="Atlas" />
       <h1>Atlas</h1>
       <p class="tagline">Find real airsoft and paintball fields and events near you — and for field owners, everything you need to manage them.</p>
