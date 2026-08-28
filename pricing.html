@@ -42,6 +42,11 @@
       <h1>Plans for field owners</h1>
       <p class="tagline">One plan for your field, whatever size it runs. Cancel or change anytime.</p>
 
+      <div style="display: inline-block; background: #E1F5EE; border: 1px solid #0F7A52; border-radius: 999px; padding: 8px 18px; margin-bottom: 24px; font-size: 13px; font-weight: 600; color: #085041;">
+        Your first month is free on any plan
+      </div>
+      <br />
+
       <div class="billing-toggle" role="group" aria-label="Billing period">
         <button type="button" id="btn-monthly" class="active">Monthly</button>
         <button type="button" id="btn-annual">Annual</button>
@@ -55,13 +60,14 @@
           <div class="tier-name">Starter</div>
           <div class="tier-desc">For a single field running open plays every so often.</div>
           <div class="tier-price">
-            <span class="amount" data-monthly="$100" data-annual="$79">$100</span>
+            <span class="amount" data-monthly="$100" data-annual="$80">$100</span>
             <span class="period">/ month</span>
           </div>
-          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $948/year">Billed monthly</div>
+          <div style="font-size: 12px; font-weight: 600; color: #0F7A52; margin-bottom: 4px;">First month free</div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $960/year">Billed monthly</div>
           <ul class="tier-features">
             <li>1 field</li>
-            <li>Up to 2 published events / month</li>
+            <li>Up to 4 published events / month</li>
             <li>Up to 75 players per event</li>
             <li>Live roster & QR check-in</li>
             <li>Saved waivers</li>
@@ -74,10 +80,11 @@
           <div class="tier-name">Pro</div>
           <div class="tier-desc">For a field running events most weekends.</div>
           <div class="tier-price">
-            <span class="amount" data-monthly="$200" data-annual="$150">$200</span>
+            <span class="amount" data-monthly="$200" data-annual="$160">$200</span>
             <span class="period">/ month</span>
           </div>
-          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $1,800/year">Billed monthly</div>
+          <div style="font-size: 12px; font-weight: 600; color: #0F7A52; margin-bottom: 4px;">First month free</div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $1,920/year">Billed monthly</div>
           <ul class="tier-features">
             <li>1 field</li>
             <li>Up to 10 published events / month</li>
@@ -92,10 +99,11 @@
           <div class="tier-name">Enterprise</div>
           <div class="tier-desc">For multi-location operators running at scale.</div>
           <div class="tier-price">
-            <span class="amount" data-monthly="$350" data-annual="$299">$350</span>
+            <span class="amount" data-monthly="$500" data-annual="$400">$500</span>
             <span class="period">/ month</span>
           </div>
-          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $3,588/year">Billed monthly</div>
+          <div style="font-size: 12px; font-weight: 600; color: #0F7A52; margin-bottom: 4px;">First month free</div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $4,800/year">Billed monthly</div>
           <ul class="tier-features">
             <li>Unlimited fields</li>
             <li>Unlimited events</li>
@@ -108,7 +116,7 @@
       </div>
 
       <div class="fee-note">
-        <strong>Player booking fee:</strong> when a player books a spot at your event, Atlas adds a flat $2 booking fee on top of your event's entry cost. That fee is paid by the player, not deducted from what you charge — it never comes out of your revenue.
+        <strong>Player booking fee:</strong> when a player books a spot at your event, Atlas adds a small booking fee on top of your event's entry cost — 10% of the price, capped at $5 no matter how expensive the event. That fee is paid by the player, not deducted from what you charge — it never comes out of your revenue.
       </div>
 
       <div class="center" style="margin-top: 8px;">
@@ -138,7 +146,7 @@
           notes.forEach(function (el) {
             el.textContent = period === "monthly" ? el.dataset.monthlyNote : el.dataset.annualNote;
           });
-          savingsNote.textContent = period === "annual" ? "Save up to 25% with annual billing" : "";
+          savingsNote.textContent = period === "annual" ? "Save 20% with annual billing" : "";
         }
 
         btnMonthly.addEventListener("click", function () { setBilling("monthly"); });
