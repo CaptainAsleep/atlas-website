@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F2F2ED" />
+    <title>Atlas Pricing — Plans for Field Owners</title>
+    <meta name="description" content="Simple, transparent pricing for airsoft and paintball field owners on Atlas. Starter, Pro, and Enterprise plans, with savings for annual billing." />
+    <link rel="canonical" href="https://airsoftatlas.app/pricing.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Atlas Pricing — Plans for Field Owners" />
+    <meta property="og:description" content="Simple, transparent pricing for airsoft and paintball field owners on Atlas." />
+    <meta property="og:url" content="https://airsoftatlas.app/pricing.html" />
+    <meta property="og:image" content="https://airsoftatlas.app/logo.jpg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Atlas Pricing — Plans for Field Owners" />
+    <meta name="twitter:image" content="https://airsoftatlas.app/logo.jpg" />
+    <link rel="icon" type="image/jpeg" href="logo.jpg" />
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
+  <body>
+    <nav class="nav">
+      <a class="nav-brand" href="index.html">
+        <img src="logo.jpg" alt="Atlas" />
+        <span>Atlas</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="#002C48" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="players.html">Players</a>
+        <a href="owners.html">Field Owners</a>
+        <a href="pricing.html" class="active">Pricing</a>
+        <a href="about.html">About</a>
+      </div>
+    </nav>
+
+    <div class="wrap wide center">
+      <h1>Plans for field owners</h1>
+      <p class="tagline">One plan for your field, whatever size it runs. Cancel or change anytime.</p>
+
+      <div class="billing-toggle" role="group" aria-label="Billing period">
+        <button type="button" id="btn-monthly" class="active">Monthly</button>
+        <button type="button" id="btn-annual">Annual</button>
+      </div>
+      <p class="savings-note" id="savings-note"></p>
+    </div>
+
+    <div class="wrap wide">
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-name">Starter</div>
+          <div class="tier-desc">For a single field running open plays every so often.</div>
+          <div class="tier-price">
+            <span class="amount" data-monthly="$100" data-annual="$79">$100</span>
+            <span class="period">/ month</span>
+          </div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $948/year">Billed monthly</div>
+          <ul class="tier-features">
+            <li>1 field</li>
+            <li>Up to 2 published events / month</li>
+            <li>Up to 75 players per event</li>
+            <li>Live roster & QR check-in</li>
+            <li>Saved waivers</li>
+          </ul>
+          <a class="tier-cta" href="https://ownerapp.airsoftatlas.app">Get Started</a>
+        </div>
+
+        <div class="tier-card featured">
+          <div class="tier-badge">Most Popular</div>
+          <div class="tier-name">Pro</div>
+          <div class="tier-desc">For a field running events most weekends.</div>
+          <div class="tier-price">
+            <span class="amount" data-monthly="$200" data-annual="$150">$200</span>
+            <span class="period">/ month</span>
+          </div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $1,800/year">Billed monthly</div>
+          <ul class="tier-features">
+            <li>1 field</li>
+            <li>Up to 10 published events / month</li>
+            <li>Up to 300 players per event</li>
+            <li>Live roster & QR check-in</li>
+            <li>Saved waivers</li>
+          </ul>
+          <a class="tier-cta" href="https://ownerapp.airsoftatlas.app">Get Started</a>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-name">Enterprise</div>
+          <div class="tier-desc">For multi-location operators running at scale.</div>
+          <div class="tier-price">
+            <span class="amount" data-monthly="$350" data-annual="$299">$350</span>
+            <span class="period">/ month</span>
+          </div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $3,588/year">Billed monthly</div>
+          <ul class="tier-features">
+            <li>Unlimited fields</li>
+            <li>Unlimited events</li>
+            <li>Unlimited players per event</li>
+            <li>Live roster & QR check-in</li>
+            <li>Saved waivers</li>
+          </ul>
+          <a class="tier-cta" href="https://ownerapp.airsoftatlas.app">Get Started</a>
+        </div>
+      </div>
+
+      <div class="fee-note">
+        <strong>Player booking fee:</strong> when a player books a spot at your event, Atlas adds a flat $2 booking fee on top of your event's entry cost. That fee is paid by the player, not deducted from what you charge — it never comes out of your revenue.
+      </div>
+
+      <div class="center" style="margin-top: 8px;">
+        <p style="font-size: 13px; color: #686C72;">Subscriptions and player booking begin October 24, 2026. Claiming and setting up your field is free until then.</p>
+      </div>
+
+      <h2>Frequently asked questions</h2>
+      <div class="faq-item">
+        <div class="faq-q">What counts toward my events-per-month limit?</div>
+        <div class="faq-a">Published events on your field within a calendar month. Drafts you haven't published yet don't count.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What happens if I go over my plan's limit?</div>
+        <div class="faq-a">You'll be prompted to upgrade before you can publish beyond your plan's event or capacity limit — nothing gets blocked without warning.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is there a fee when players book my events?</div>
+        <div class="faq-a">Yes — a flat $2 per booking, paid by the player on top of your entry cost. It's separate from your monthly plan and never reduces what you receive.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">When does billing actually start?</div>
+        <div class="faq-a">October 24, 2026. You can claim your field and get everything set up before then at no cost.</div>
+      </div>
+
+      <footer>
+        Questions or feedback? <a href="https://discord.gg/hR8EntGsq">Join our Discord</a>
+      </footer>
+    </div>
+
+    <script src="nav.js"></script>
+    <script>
+      (function () {
+        var btnMonthly = document.getElementById("btn-monthly");
+        var btnAnnual = document.getElementById("btn-annual");
+        var amounts = document.querySelectorAll(".amount");
+        var notes = document.querySelectorAll(".tier-billed-note");
+        var savingsNote = document.getElementById("savings-note");
+
+        function setBilling(period) {
+          btnMonthly.classList.toggle("active", period === "monthly");
+          btnAnnual.classList.toggle("active", period === "annual");
+          amounts.forEach(function (el) {
+            el.textContent = period === "monthly" ? el.dataset.monthly : el.dataset.annual;
+          });
+          notes.forEach(function (el) {
+            el.textContent = period === "monthly" ? el.dataset.monthlyNote : el.dataset.annualNote;
+          });
+          savingsNote.textContent = period === "annual" ? "Save up to 25% with annual billing" : "";
+        }
+
+        btnMonthly.addEventListener("click", function () { setBilling("monthly"); });
+        btnAnnual.addEventListener("click", function () { setBilling("annual"); });
+      })();
+    </script>
+  </body>
+</html>
