@@ -1,0 +1,416 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #F2F2ED;
+  color: #002C48;
+  font-family: 'Inter', sans-serif;
+}
+
+a { color: inherit; }
+
+/* ---------- Nav ---------- */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 22px 24px;
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #002C48;
+}
+.nav-brand img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.nav-brand span {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+.nav-links {
+  display: flex;
+  gap: 22px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #4E5257;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: #1554B8;
+}
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+}
+.nav-toggle svg { display: block; }
+
+@media (max-width: 640px) {
+  .nav { position: relative; }
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 4px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #D2D2CB;
+    padding: 12px 24px 16px;
+    z-index: 100;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-links a {
+    padding: 10px 0;
+  }
+}
+
+/* ---------- Page shell ---------- */
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px 24px 48px;
+}
+.wrap.wide {
+  max-width: 960px;
+}
+.center {
+  text-align: center;
+}
+
+/* ---------- Hero ---------- */
+.logo {
+  width: 88px;
+  height: 88px;
+  border-radius: 18px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 8px;
+}
+h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 40px 0 6px;
+}
+.tagline {
+  font-size: 16px;
+  color: #4E5257;
+  margin: 0 0 40px;
+  line-height: 1.5;
+}
+p {
+  line-height: 1.6;
+  color: #4E5257;
+}
+
+/* ---------- Cards ---------- */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+.card {
+  display: block;
+  background: #FFFFFF;
+  border: 1px solid #D2D2CB;
+  border-radius: 10px;
+  padding: 20px 22px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease;
+}
+.card:hover {
+  border-color: #1554B8;
+}
+.card-label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #686C72;
+  margin-bottom: 4px;
+}
+.card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.card-desc {
+  font-size: 14px;
+  color: #4E5257;
+  line-height: 1.5;
+}
+.card-arrow {
+  color: #1554B8;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+}
+
+/* ---------- Feature list ---------- */
+.feature {
+  display: flex;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #D2D2CB;
+  text-align: left;
+}
+.feature:last-child { border-bottom: none; }
+.feature-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #1554B8;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+.feature-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 3px;
+}
+.feature-desc {
+  font-size: 14px;
+  color: #4E5257;
+  line-height: 1.5;
+}
+
+/* ---------- CTA button ---------- */
+.cta {
+  display: inline-block;
+  background: #002C48;
+  color: #FFFFFF;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 13px 26px;
+  border-radius: 6px;
+  margin-top: 24px;
+}
+
+footer {
+  margin-top: 56px;
+  font-size: 13px;
+  color: #686C72;
+  text-align: center;
+}
+footer a {
+  color: #1554B8;
+  text-decoration: none;
+}
+
+/* ---------- Pricing ---------- */
+.billing-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #FFFFFF;
+  border: 1px solid #D2D2CB;
+  border-radius: 999px;
+  padding: 6px 8px;
+  margin: 0 0 8px;
+}
+.billing-toggle button {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: #686C72;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.billing-toggle button.active {
+  background: #002C48;
+  color: #FFFFFF;
+}
+.savings-note {
+  font-size: 12px;
+  color: #0F7A52;
+  font-weight: 600;
+  margin: 0 0 32px;
+  min-height: 16px;
+}
+
+.tier-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+.tier-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid #D2D2CB;
+  border-radius: 10px;
+  padding: 24px 22px;
+}
+.tier-card.featured {
+  border: 2px solid #1554B8;
+}
+.tier-badge {
+  position: absolute;
+  top: -12px;
+  left: 22px;
+  background: #1554B8;
+  color: #FFFFFF;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.tier-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.tier-desc {
+  font-size: 13px;
+  color: #4E5257;
+  margin-bottom: 16px;
+}
+.tier-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.tier-price .amount {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: #002C48;
+}
+.tier-price .period {
+  font-size: 14px;
+  color: #686C72;
+}
+.tier-billed-note {
+  font-size: 12px;
+  color: #686C72;
+  margin-bottom: 18px;
+  min-height: 16px;
+}
+.tier-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.tier-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #4E5257;
+  padding: 6px 0;
+  border-bottom: 1px solid #E7E7E1;
+}
+.tier-features li:last-child {
+  border-bottom: none;
+}
+.tier-features li::before {
+  content: "✓";
+  color: #0F7A52;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.tier-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #002C48;
+  color: #FFFFFF;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+.tier-card.featured .tier-cta {
+  background: #1554B8;
+}
+
+.fee-note {
+  background: #FFFFFF;
+  border: 1px solid #D2D2CB;
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #4E5257;
+  line-height: 1.6;
+}
+
+.faq-item {
+  padding: 16px 0;
+  border-bottom: 1px solid #D2D2CB;
+  text-align: left;
+}
+.faq-item:last-child { border-bottom: none; }
+.faq-q {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.faq-a {
+  font-size: 13px;
+  color: #4E5257;
+  line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .tier-grid {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .tier-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .tier-card .tier-cta {
+    margin-top: auto;
+  }
+}

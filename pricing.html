@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F2F2ED" />
+    <title>Atlas Pricing — Plans for Field Owners</title>
+    <meta name="description" content="Simple, transparent pricing for airsoft field owners on Atlas. Starter, Pro, and Enterprise plans, with savings for annual billing." />
+    <link rel="canonical" href="https://airsoftatlas.app/pricing.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Atlas Pricing — Plans for Field Owners" />
+    <meta property="og:description" content="Simple, transparent pricing for airsoft field owners on Atlas." />
+    <meta property="og:url" content="https://airsoftatlas.app/pricing.html" />
+    <meta property="og:image" content="https://airsoftatlas.app/logo.jpg" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Atlas Pricing — Plans for Field Owners" />
+    <meta name="twitter:image" content="https://airsoftatlas.app/logo.jpg" />
+    <link rel="icon" type="image/jpeg" href="logo.jpg" />
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
+  <body>
+    <nav class="nav">
+      <a class="nav-brand" href="index.html">
+        <img src="logo.jpg" alt="Atlas" />
+        <span>Atlas</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="#002C48" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="players.html">Players</a>
+        <a href="owners.html">Field Owners</a>
+        <a href="pricing.html" class="active">Pricing</a>
+        <a href="about.html">About</a>
+      </div>
+    </nav>
+
+    <div class="wrap wide center">
+      <h1>Plans for field owners</h1>
+      <p class="tagline">One plan for your field, whatever size it runs. Cancel or change anytime.</p>
+
+      <div style="display: inline-block; background: #E1F5EE; border: 1px solid #0F7A52; border-radius: 999px; padding: 8px 18px; margin-bottom: 24px; font-size: 13px; font-weight: 600; color: #085041;">
+        Your first month is free on any plan
+      </div>
+      <br />
+
+      <div class="billing-toggle" role="group" aria-label="Billing period">
+        <button type="button" id="btn-monthly" class="active">Monthly</button>
+        <button type="button" id="btn-annual">Annual</button>
+      </div>
+      <p class="savings-note" id="savings-note"></p>
+    </div>
+
+    <div class="wrap wide">
+      <div class="tier-grid">
+        <div class="tier-card">
+          <div class="tier-name">Starter</div>
+          <div class="tier-desc">For a single field running open plays every so often.</div>
+          <div class="tier-price">
+            <span class="amount" data-monthly="$100" data-annual="$80">$100</span>
+            <span class="period">/ month</span>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: #0F7A52; margin-bottom: 4px;">First month free</div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $960/year">Billed monthly</div>
+          <ul class="tier-features">
+            <li>1 field</li>
+            <li>Up to 4 published events / month</li>
+            <li>Up to 75 players per event</li>
+            <li>Live roster & QR check-in</li>
+            <li>Saved waivers</li>
+          </ul>
+          <a class="tier-cta" href="https://ownerapp.airsoftatlas.app">Get Started</a>
+        </div>
+
+        <div class="tier-card featured">
+          <div class="tier-badge">Most Popular</div>
+          <div class="tier-name">Pro</div>
+          <div class="tier-desc">For a field running events most weekends.</div>
+          <div class="tier-price">
+            <span class="amount" data-monthly="$200" data-annual="$160">$200</span>
+            <span class="period">/ month</span>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: #0F7A52; margin-bottom: 4px;">First month free</div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $1,920/year">Billed monthly</div>
+          <ul class="tier-features">
+            <li>1 field</li>
+            <li>Up to 10 published events / month</li>
+            <li>Up to 300 players per event</li>
+            <li>Live roster & QR check-in</li>
+            <li>Saved waivers</li>
+          </ul>
+          <a class="tier-cta" href="https://ownerapp.airsoftatlas.app">Get Started</a>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-name">Enterprise</div>
+          <div class="tier-desc">For multi-location operators running at scale.</div>
+          <div class="tier-price">
+            <span class="amount" data-monthly="$500" data-annual="$400">$500</span>
+            <span class="period">/ month</span>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: #0F7A52; margin-bottom: 4px;">First month free</div>
+          <div class="tier-billed-note" data-monthly-note="Billed monthly" data-annual-note="Billed annually at $4,800/year">Billed monthly</div>
+          <ul class="tier-features">
+            <li>Unlimited fields</li>
+            <li>Unlimited events</li>
+            <li>Unlimited players per event</li>
+            <li>Live roster & QR check-in</li>
+            <li>Saved waivers</li>
+          </ul>
+          <a class="tier-cta" href="https://ownerapp.airsoftatlas.app">Get Started</a>
+        </div>
+      </div>
+
+      <h2>Every plan includes</h2>
+      <div class="feature">
+        <div class="feature-dot"></div>
+        <div>
+          <div class="feature-title">Full field profile</div>
+          <div class="feature-desc">Hours, amenities, rules, chrono limits, rental gear, and a photo gallery — all in your control.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-dot"></div>
+        <div>
+          <div class="feature-title">Drafts, publishing, and duplication</div>
+          <div class="feature-desc">Build an event as a draft, publish when it's ready, and duplicate past events instead of starting from scratch.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-dot"></div>
+        <div>
+          <div class="feature-title">Real analytics</div>
+          <div class="feature-desc">Published events, total interest, bookings, and waiver signatures — honest numbers about your own field, not vanity stats.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-dot"></div>
+        <div>
+          <div class="feature-title">Competing-events heads-up</div>
+          <div class="feature-desc">A warning if another nearby field has a big event the same day, so you can plan around it.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-dot"></div>
+        <div>
+          <div class="feature-title">Check-in reward patches</div>
+          <div class="feature-desc">Attach a patch to an event and it's granted automatically the moment a player checks in.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-dot"></div>
+        <div>
+          <div class="feature-title">Player bans</div>
+          <div class="feature-desc">Ban a problem player from your field directly, right from your roster.</div>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-dot"></div>
+        <div>
+          <div class="feature-title">Direct support</div>
+          <div class="feature-desc">Reach the team directly in our Discord — real answers, not a ticket queue.</div>
+        </div>
+      </div>
+
+      <div class="fee-note">
+        <strong>Player booking fee:</strong> when a player books a spot at your event, Atlas adds a small booking fee on top of your event's entry cost — 10% of the price, capped at $3 no matter how expensive the event. That fee is paid by the player, not deducted from what you charge — it never comes out of your revenue.
+      </div>
+
+      <div class="center" style="margin-top: 8px;">
+        <p style="font-size: 13px; color: #686C72;">Subscriptions and player booking are live now — claim your field and get started today.</p>
+      </div>
+
+      <footer>
+        Questions or feedback? <a href="https://discord.gg/hR8EntGsq">Join our Discord</a>
+      </footer>
+    </div>
+
+    <script src="nav.js"></script>
+    <script>
+      (function () {
+        var btnMonthly = document.getElementById("btn-monthly");
+        var btnAnnual = document.getElementById("btn-annual");
+        var amounts = document.querySelectorAll(".amount");
+        var notes = document.querySelectorAll(".tier-billed-note");
+        var savingsNote = document.getElementById("savings-note");
+
+        function setBilling(period) {
+          btnMonthly.classList.toggle("active", period === "monthly");
+          btnAnnual.classList.toggle("active", period === "annual");
+          amounts.forEach(function (el) {
+            el.textContent = period === "monthly" ? el.dataset.monthly : el.dataset.annual;
+          });
+          notes.forEach(function (el) {
+            el.textContent = period === "monthly" ? el.dataset.monthlyNote : el.dataset.annualNote;
+          });
+          savingsNote.textContent = period === "annual" ? "Save 20% with annual billing" : "";
+        }
+
+        btnMonthly.addEventListener("click", function () { setBilling("monthly"); });
+        btnAnnual.addEventListener("click", function () { setBilling("annual"); });
+      })();
+    </script>
+  </body>
+</html>
