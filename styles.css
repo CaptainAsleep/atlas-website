@@ -234,6 +234,12 @@ footer a {
   color: #1554B8;
   text-decoration: none;
 }
+footer p {
+  margin: 0 0 4px;
+}
+footer p:last-child {
+  margin-bottom: 0;
+}
 
 /* ---------- Pricing ---------- */
 .billing-toggle {
