@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F2F2ED" />
+    <title>Verify Your Email — Atlas</title>
+    <meta name="description" content="Confirm your email address for your Atlas account." />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://airsoftatlas.app/verify-email.html" />
+    <link rel="icon" type="image/jpeg" href="logo.jpg" />
+    <link rel="stylesheet" href="styles.css?v=2" />
+  </head>
+  <body>
+    <nav class="nav">
+      <a class="nav-brand" href="index.html">
+        <img src="logo.jpg" alt="Atlas" />
+        <span>Atlas</span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <path d="M3 6h16M3 11h16M3 16h16" stroke="#002C48" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="players.html">Players</a>
+        <a href="owners.html">Field Owners</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="about.html">About</a>
+      </div>
+    </nav>
+
+    <div class="wrap center">
+      <img class="logo" src="logo.jpg" alt="Atlas" />
+      <h1>Email Verification</h1>
+      <p class="tagline" id="verify-status">Verifying your email&hellip;</p>
+    </div>
+
+    <script src="nav.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAuth, applyActionCode } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+      // Public-safe client config (same values baked into every build of
+      // the player/owner apps) — ATLAS_FIREBASE_CONFIG_PLACEHOLDER:
+      // apiKey, authDomain, messagingSenderId, and appId still need the
+      // real values from Michael (see atlas-status.md / the plan file for
+      // this feature). projectId/storageBucket are filled with high
+      // confidence from other evidence already in this repo.
+      const firebaseConfig = {
+        apiKey: "REPLACE_ME",
+        authDomain: "REPLACE_ME",
+        projectId: "atlas-players-app",
+        storageBucket: "atlas-players-app.firebasestorage.app",
+        messagingSenderId: "REPLACE_ME",
+        appId: "REPLACE_ME",
+      };
+
+      const statusEl = document.getElementById("verify-status");
+      const params = new URLSearchParams(location.search);
+
+      if (params.get("mode") !== "verifyEmail" || !params.get("oobCode")) {
+        statusEl.textContent = "This link looks incomplete — open it directly from the email Atlas sent you.";
+      } else {
+        const auth = getAuth(initializeApp(firebaseConfig));
+        applyActionCode(auth, params.get("oobCode"))
+          .then(() => {
+            statusEl.textContent = "Email verified — you're all set. You can close this tab and head back to Atlas.";
+          })
+          .catch(() => {
+            statusEl.textContent = "This link has expired or was already used.";
+          });
+      }
+    </script>
+  </body>
+</html>
