@@ -35,6 +35,7 @@
       <img class="logo" src="logo.jpg" alt="Atlas" />
       <h1>Email Verification</h1>
       <p class="tagline" id="verify-status">Verifying your email&hellip;</p>
+      <a class="cta" id="verify-continue" href="#" style="display:none;"></a>
     </div>
 
     <script src="nav.js"></script>
@@ -42,19 +43,17 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import { getAuth, applyActionCode } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-      // Public-safe client config (same values baked into every build of
-      // the player/owner apps) — ATLAS_FIREBASE_CONFIG_PLACEHOLDER:
-      // apiKey, authDomain, messagingSenderId, and appId still need the
-      // real values from Michael (see atlas-status.md / the plan file for
-      // this feature). projectId/storageBucket are filled with high
-      // confidence from other evidence already in this repo.
+      // Public-safe client config — the same values baked into every
+      // build of the player/owner apps (filled 2026-10-13 from the live
+      // owner-app bundle). A Firebase web API key identifies the project;
+      // it isn't a secret — Firestore/Storage rules are what protect data.
       const firebaseConfig = {
-        apiKey: "REPLACE_ME",
-        authDomain: "REPLACE_ME",
+        apiKey: "AIzaSyD4wCMF_drnENoRz6wkRRbdxyO9d2n2QFE",
+        authDomain: "atlas-players-app.firebaseapp.com",
         projectId: "atlas-players-app",
         storageBucket: "atlas-players-app.firebasestorage.app",
-        messagingSenderId: "REPLACE_ME",
-        appId: "REPLACE_ME",
+        messagingSenderId: "211739354235",
+        appId: "1:211739354235:web:a6f20f9d2e13c409a96ede",
       };
 
       const statusEl = document.getElementById("verify-status");
@@ -67,6 +66,22 @@
         applyActionCode(auth, params.get("oobCode"))
           .then(() => {
             statusEl.textContent = "Email verified — you're all set. You can close this tab and head back to Atlas.";
+            // Firebase passes along the continue URL the email was sent
+            // with (e.g. the owner app, for a field claim). Only ever link
+            // back to an Atlas domain, never an arbitrary URL.
+            try {
+              const next = new URL(params.get("continueUrl") || "");
+              if (next.protocol === "https:" && (next.hostname === "airsoftatlas.app" || next.hostname.endsWith(".airsoftatlas.app"))) {
+                const btn = document.getElementById("verify-continue");
+                const isOwner = next.hostname.startsWith("ownerapp.");
+                statusEl.textContent = isOwner
+                  ? "Email verified. Head back to the owner app and tap Claim on your field again — it'll go through instantly."
+                  : "Email verified — you're all set.";
+                btn.textContent = isOwner ? "Back to the Field Owner App →" : "Back to Atlas →";
+                btn.href = next.href;
+                btn.style.display = "inline-block";
+              }
+            } catch (_) { /* no or malformed continueUrl — plain message stays */ }
           })
           .catch(() => {
             statusEl.textContent = "This link has expired or was already used.";
