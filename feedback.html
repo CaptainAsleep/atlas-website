@@ -163,7 +163,11 @@
           $("fb-atlas-comment").placeholder = "What worked, what didn't, what's missing? (optional)";
           $("fb-done-sub").textContent = "Thanks for running your event on Atlas.";
         } else {
-          $("fb-title").textContent = "Rate your day";
+          // Child-only booking (the parent didn't play): ask about the
+          // child's day — "Rate Ghost's day", "Rate Ghost and Viper's day".
+          const kids = Array.isArray(ctx.childCallsigns) ? ctx.childCallsigns : [];
+          const kidsLabel = kids.length <= 1 ? kids.join("") : `${kids.slice(0, -1).join(", ")} and ${kids[kids.length - 1]}`;
+          $("fb-title").textContent = kids.length ? `Rate ${kidsLabel}'s day` : "Rate your day";
           $("fb-sub").textContent = `${ctx.eventTitle} at ${ctx.fieldName} · ${ctx.eventDate}`;
         }
         const e = ctx.existing;
