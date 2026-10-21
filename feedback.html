@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F2F2ED" />
+    <title>Event Feedback — Atlas</title>
+    <meta name="description" content="Rate your event on Atlas." />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/jpeg" href="logo.jpg" />
+    <link rel="stylesheet" href="styles.css?v=2" />
+    <style>
+      .fb-card { background:#FFFFFF; border-radius:14px; padding:24px; margin:0 0 16px; box-shadow:0 1px 2px rgba(0,44,72,.06), 0 8px 24px -12px rgba(0,44,72,.18); }
+      .fb-eyebrow { font-family:'IBM Plex Mono','Courier New',monospace; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#686C72; margin:0 0 6px; }
+      .fb-q { font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:600; margin:0 0 14px; color:#002C48; }
+      .fb-stars { display:flex; gap:6px; margin:0 0 6px; }
+      .fb-star { background:none; border:none; padding:4px; cursor:pointer; font-size:36px; line-height:1; color:#D2D2CB; transition:transform .08s; }
+      .fb-star.on { color:#1554B8; }
+      .fb-star:active { transform:scale(.9); }
+      .fb-star:focus-visible { outline:2px solid #1554B8; outline-offset:2px; border-radius:6px; }
+      .fb-label { font-size:13px; color:#686C72; min-height:18px; margin:0 0 14px; }
+      .fb-card textarea { width:100%; min-height:96px; resize:vertical; font:inherit; font-size:15px; color:#002C48; background:#F7F7F3; border:1px solid #E4E4DC; border-radius:10px; padding:12px; }
+      .fb-card textarea:focus { outline:none; border-color:#1554B8; background:#FFFFFF; }
+      .fb-check { display:flex; gap:10px; align-items:flex-start; font-size:14px; line-height:1.5; color:#2A2E33; margin:4px 0 0; cursor:pointer; }
+      .fb-check input { margin-top:3px; width:18px; height:18px; accent-color:#1554B8; flex:none; }
+      .fb-note { font-size:13px; color:#686C72; line-height:1.55; margin:0 0 16px; }
+      .fb-submit { width:100%; border:none; cursor:pointer; background:#1554B8; color:#FFFFFF; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; padding:15px; border-radius:999px; box-shadow:0 8px 20px -6px rgba(21,84,184,.5); }
+      .fb-submit:disabled { opacity:.5; cursor:default; }
+      .fb-error { color:#B3261E; font-size:14px; margin:12px 0 0; min-height:20px; text-align:center; }
+      .fb-head { text-align:center; margin:8px 0 24px; }
+      .fb-head h1 { font-size:28px; margin:0 0 6px; }
+      .fb-head p { margin:0; color:#4E5257; }
+      [hidden] { display:none !important; }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <a class="nav-brand" href="index.html">
+        <img src="logo.jpg" alt="Atlas" />
+        <span>Atlas</span>
+      </a>
+    </nav>
+
+    <div class="wrap">
+      <div id="fb-loading" class="center"><p class="tagline">Loading&hellip;</p></div>
+
+      <div id="fb-invalid" class="center" hidden>
+        <h1 style="font-size:28px;">Link not found</h1>
+        <p class="tagline">This feedback link doesn't look right. Open it straight from the email Atlas sent you, or just reply to that email instead.</p>
+      </div>
+
+      <form id="fb-form" hidden novalidate>
+        <div class="fb-head">
+          <h1 id="fb-title"></h1>
+          <p id="fb-sub"></p>
+        </div>
+
+        <div class="fb-card" id="fb-field-card">
+          <p class="fb-eyebrow">The field</p>
+          <p class="fb-q">How was <span class="js-field"></span>?</p>
+          <div class="fb-stars" data-name="fieldRating" role="radiogroup" aria-label="Field rating"></div>
+          <p class="fb-label" id="fieldRating-label"></p>
+          <textarea name="fieldComment" maxlength="2000" placeholder="Anything the field should know? (optional)"></textarea>
+          <p class="fb-note" style="margin:10px 0 0;">Shared with <span class="js-field"></span> without your name.</p>
+        </div>
+
+        <div class="fb-card">
+          <p class="fb-eyebrow">Atlas</p>
+          <p class="fb-q" id="fb-atlas-q">How was booking and check-in through Atlas?</p>
+          <div class="fb-stars" data-name="atlasRating" role="radiogroup" aria-label="Atlas rating"></div>
+          <p class="fb-label" id="atlasRating-label"></p>
+          <textarea name="atlasComment" maxlength="2000" id="fb-atlas-comment" placeholder="Anything we should fix or keep? (optional)"></textarea>
+        </div>
+
+        <div class="fb-card" id="fb-quote-card">
+          <label class="fb-check">
+            <input type="checkbox" name="quoteConsent" />
+            <span>Atlas can use my feedback in marketing. It will be anonymous &mdash; no name or callsign.</span>
+          </label>
+        </div>
+
+        <div class="fb-card" id="fb-call-card" hidden>
+          <label class="fb-check">
+            <input type="checkbox" name="callOptIn" />
+            <span>I'm happy to hop on a 10-minute call about it.</span>
+          </label>
+        </div>
+
+        <button type="submit" class="fb-submit" id="fb-submit">Send feedback</button>
+        <p class="fb-error" id="fb-error"></p>
+      </form>
+
+      <div id="fb-done" class="center" hidden>
+        <img class="logo" src="logo.jpg" alt="Atlas" />
+        <h1 style="font-size:28px;">Thanks &mdash; got it.</h1>
+        <p class="tagline" id="fb-done-sub">That genuinely helps. See you on the field.</p>
+        <p style="margin:0;"><a href="#" id="fb-edit" style="color:#1554B8;">Change my answers</a></p>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+
+      // Same public-safe client config as verify-email.html.
+      const app = initializeApp({
+        apiKey: "AIzaSyD4wCMF_drnENoRz6wkRRbdxyO9d2n2QFE",
+        authDomain: "atlas-players-app.firebaseapp.com",
+        projectId: "atlas-players-app",
+        storageBucket: "atlas-players-app.firebasestorage.app",
+        messagingSenderId: "211739354235",
+        appId: "1:211739354235:web:a6f20f9d2e13c409a96ede",
+      });
+      const fns = getFunctions(app);
+      const getCtx = httpsCallable(fns, "getFeedbackContext");
+      const submit = httpsCallable(fns, "submitEventFeedback");
+
+      const $ = (id) => document.getElementById(id);
+      const params = new URLSearchParams(location.search);
+      const token = params.get("t");
+      const WORDS = ["", "Rough", "Not great", "Okay", "Good", "Great"];
+      const values = { fieldRating: null, atlasRating: null };
+      let role = "player";
+
+      function setRating(name, n) {
+        values[name] = n;
+        document.querySelectorAll(`[data-name="${name}"] .fb-star`).forEach((b, i) => {
+          b.classList.toggle("on", i < n);
+          b.setAttribute("aria-checked", String(i + 1 === n));
+        });
+        $(`${name}-label`).textContent = n ? WORDS[n] : "";
+      }
+      document.querySelectorAll(".fb-stars").forEach((group) => {
+        const name = group.dataset.name;
+        for (let i = 1; i <= 5; i++) {
+          const b = document.createElement("button");
+          b.type = "button"; b.className = "fb-star"; b.textContent = "★";
+          b.setAttribute("role", "radio"); b.setAttribute("aria-label", `${i} star${i > 1 ? "s" : ""}`);
+          b.addEventListener("click", () => { setRating(name, i); $("fb-error").textContent = ""; });
+          group.appendChild(b);
+        }
+      });
+
+      function show(id) {
+        for (const x of ["fb-loading", "fb-invalid", "fb-form", "fb-done"]) $(x).hidden = x !== id;
+        window.scrollTo(0, 0);
+      }
+
+      async function load() {
+        if (!token) return show("fb-invalid");
+        let ctx;
+        try { ctx = (await getCtx({ token })).data; } catch (_) { return show("fb-invalid"); }
+        role = ctx.role;
+        document.querySelectorAll(".js-field").forEach((el) => (el.textContent = ctx.fieldName));
+        const form = $("fb-form");
+        if (role === "owner") {
+          $("fb-title").textContent = `How did Atlas do?`;
+          $("fb-sub").textContent = `${ctx.eventTitle} · ${ctx.eventDate}`;
+          $("fb-field-card").hidden = true;
+          $("fb-quote-card").hidden = true;
+          $("fb-call-card").hidden = false;
+          $("fb-atlas-q").textContent = "How did Atlas perform for your event?";
+          $("fb-atlas-comment").placeholder = "What worked, what didn't, what's missing? (optional)";
+          $("fb-done-sub").textContent = "Thanks for running your event on Atlas.";
+        } else {
+          $("fb-title").textContent = "Rate your day";
+          $("fb-sub").textContent = `${ctx.eventTitle} at ${ctx.fieldName} · ${ctx.eventDate}`;
+        }
+        const e = ctx.existing;
+        if (e) {
+          if (e.fieldRating) setRating("fieldRating", e.fieldRating);
+          if (e.atlasRating) setRating("atlasRating", e.atlasRating);
+          form.fieldComment.value = e.fieldComment || "";
+          form.atlasComment.value = e.atlasComment || "";
+          form.quoteConsent.checked = !!e.quoteConsent;
+          form.callOptIn.checked = !!e.callOptIn;
+        }
+        // A star tapped in the email arrives as ?r=N and pre-fills the
+        // first question on the page.
+        const r = parseInt(params.get("r"), 10);
+        if (r >= 1 && r <= 5) setRating(role === "owner" ? "atlasRating" : "fieldRating", r);
+        show("fb-form");
+      }
+
+      $("fb-form").addEventListener("submit", async (ev) => {
+        ev.preventDefault();
+        const form = ev.target;
+        if ((role === "player" && !values.fieldRating) || !values.atlasRating) {
+          $("fb-error").textContent = role === "player" ? "Please pick a star rating for both the field and Atlas." : "Please pick a star rating.";
+          return;
+        }
+        $("fb-submit").disabled = true; $("fb-submit").textContent = "Sending…"; $("fb-error").textContent = "";
+        try {
+          await submit({
+            token,
+            fieldRating: values.fieldRating, fieldComment: form.fieldComment.value,
+            atlasRating: values.atlasRating, atlasComment: form.atlasComment.value,
+            quoteConsent: form.quoteConsent.checked, callOptIn: form.callOptIn.checked,
+          });
+          show("fb-done");
+        } catch (_) {
+          $("fb-error").textContent = "Couldn't send that. Check your connection and try again.";
+        } finally {
+          $("fb-submit").disabled = false; $("fb-submit").textContent = "Send feedback";
+        }
+      });
+      $("fb-edit").addEventListener("click", (e) => { e.preventDefault(); show("fb-form"); });
+
+      load();
+    </script>
+  </body>
+</html>
