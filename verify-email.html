@@ -59,7 +59,12 @@
       const statusEl = document.getElementById("verify-status");
       const params = new URLSearchParams(location.search);
 
-      if (params.get("mode") !== "verifyEmail" || !params.get("oobCode")) {
+      // If the Firebase Console's custom action URL points here, Firebase
+      // sends EVERY action (incl. password resets from the app's fallback
+      // path) to this page — hand those to the reset page instead.
+      if (params.get("mode") === "resetPassword") {
+        location.replace("reset-password.html" + location.search);
+      } else if (params.get("mode") !== "verifyEmail" || !params.get("oobCode")) {
         statusEl.textContent = "This link looks incomplete — open it directly from the email Atlas sent you.";
       } else {
         const auth = getAuth(initializeApp(firebaseConfig));
