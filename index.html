@@ -1,81 +1,392 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#F2F2ED" />
-    <title>Atlas — Find Airsoft Fields & Events Near You</title>
-    <meta name="description" content="Discover real airsoft fields and events near you. Browse fields, book your spot, and track your patch collection — free for players. Field owners and event organizers can list and manage their fields and events too." />
-    <link rel="canonical" href="https://airsoftatlas.app/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Atlas — Find Airsoft Fields & Events Near You" />
-    <meta property="og:description" content="Discover real airsoft fields and events near you. Browse fields, book your spot, and track your patch collection." />
-    <meta property="og:url" content="https://airsoftatlas.app/" />
-    <meta property="og:image" content="https://airsoftatlas.app/logo.jpg" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Atlas — Find Airsoft Fields & Events Near You" />
-    <meta name="twitter:description" content="Discover real airsoft fields and events near you." />
-    <meta name="twitter:image" content="https://airsoftatlas.app/logo.jpg" />
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Atlas",
-      "url": "https://airsoftatlas.app/",
-      "logo": "https://airsoftatlas.app/logo.jpg",
-      "description": "Atlas helps players find real airsoft fields and events, and helps field owners and event organizers manage them.",
-      "sameAs": ["https://discord.gg/4FFyd2qAs"]
-    }
-    </script>
-    <link rel="icon" type="image/jpeg" href="logo.jpg" />
-    <link rel="stylesheet" href="styles.css?v=2" />
-  </head>
-  <body>
-    <nav class="nav">
-      <a class="nav-brand" href="index.html">
-        <img src="logo.jpg" alt="Atlas" />
-        <span>Atlas</span>
-      </a>
-      <button class="nav-toggle" aria-label="Menu">
-        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-          <path d="M3 6h16M3 11h16M3 16h16" stroke="#002C48" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-      </button>
-      <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="players.html">Players</a>
-        <a href="owners.html">Field Owners &amp; Event Organizers</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="about.html">About</a>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Atlas — Find Airsoft Fields & Events Near You</title>
+  <meta name="description" content="Find real airsoft fields and events near you, book your spot, sign waivers, and collect patches. Field owners and event organizers get booking, QR check-in, and payouts — $0 per month." />
+  <link rel="canonical" href="https://airsoftatlas.app/" />
+  <meta name="theme-color" content="#001523" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://airsoftatlas.app/" />
+  <meta property="og:title" content="Atlas — Find Airsoft Fields & Events Near You" />
+  <meta property="og:description" content="Find real airsoft fields and events near you, book your spot, and track your patches. Field owners and event organizers run game day from one app." />
+  <meta property="og:image" content="https://airsoftatlas.app/logo.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Atlas — Find Airsoft Fields & Events Near You" />
+  <meta name="twitter:description" content="Find real airsoft fields and events near you, book your spot, and track your patches." />
+  <meta name="twitter:image" content="https://airsoftatlas.app/logo.jpg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16.png" />
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css?v=1" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Fixed parallax terrain behind the whole page -->
+  <div class="terrain" aria-hidden="true">
+    <div class="terrain-layer" id="terrainFar"></div>
+    <div class="terrain-layer" id="terrainNear"></div>
+    <div class="terrain-grid" id="terrainGrid"></div>
+  </div>
+
+  <header class="nav" id="nav">
+    <a class="nav-brand" href="#top" aria-label="Atlas home">
+      <img src="img/atlas-mark.webp" alt="" width="40" height="40" />
+      <span>Atlas</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="#fields">Fields</a>
+      <a href="#players">Players</a>
+      <a href="#owners">Field owners &amp; organizers</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#about">About</a>
+      <a class="nav-cta" href="https://playerapp.airsoftatlas.app">Open the Player App</a>
     </nav>
+  </header>
 
-    <div class="wrap center">
-      <img class="logo" src="logo.jpg" alt="Atlas" />
-      <h1>Atlas</h1>
-      <p class="tagline">Find real airsoft fields and events near you — and for field owners and event organizers, everything you need to manage them.</p>
+  <!-- Scroll meter: a 30-round mag that empties as you read -->
+  <a class="mag" id="mag" href="#top" aria-label="Back to top">
+    <span class="mag-rounds" id="magRounds" aria-hidden="true"></span>
+    <span class="mag-count"><b id="magCount">30</b>/30</span>
+    <span class="mag-reload">Reload</span>
+  </a>
 
-      <div class="cards">
-        <a class="card" href="https://playerapp.airsoftatlas.app">
-          <div class="card-label">For Players</div>
-          <div class="card-title">Open the Player App</div>
-          <div class="card-desc">Browse fields and events, save favorites, book your spot, and track your patch collection.</div>
-          <span class="card-arrow">Get Started →</span>
-        </a>
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <canvas class="hero-bbs" id="bbs" aria-hidden="true"></canvas>
 
-        <a class="card" href="https://ownerapp.airsoftatlas.app">
-          <div class="card-label">For Field Owners &amp; Event Organizers</div>
-          <div class="card-title">Download the Owners App</div>
-          <div class="card-desc">Claim your field or run your own events, and see who's coming.</div>
-          <span class="card-arrow">Get Started →</span>
-        </a>
+      <div class="hud hud-tl" data-drift="-0.12" aria-hidden="true">
+        <span class="hud-dot"></span> Eye pro on<br />
+        AO &nbsp;United States<br />
+        <span id="hudFields">000</span> fields &nbsp;/&nbsp; <span id="hudStates">00</span> states
+      </div>
+      <div class="hud hud-tr" data-drift="-0.12" aria-hidden="true">
+        Chrono &nbsp;<b id="chronoFps">398</b> fps<br />
+        0.20 g &nbsp;/&nbsp; <b id="chronoJ">1.47</b> J<br />
+        Range &nbsp;<b id="hudRange">000</b> m
       </div>
 
-      <footer>
-        <p>🇺🇸 A Veteran Owned Company</p>
-        <p>Questions or feedback? <a href="https://discord.gg/4FFyd2qAs">Join our Discord</a></p>
-      </footer>
+      <div class="hero-core">
+        <div class="reticle" id="reticle" data-drift="0.28" aria-hidden="true">
+          <img class="hero-logo" src="img/atlas-mark.webp" alt="Atlas" width="320" height="320" />
+        </div>
+
+        <h1 class="hero-title" data-drift="0.14">
+          <span class="line"><span>Find your</span></span>
+          <span class="line"><span>next op.</span></span>
+        </h1>
+        <p class="hero-sub" data-drift="0.08">
+          Real airsoft fields and events near you. And for field owners and event organizers,
+          everything you need to run game day.
+        </p>
+        <div class="hero-cta" data-drift="0.04">
+          <a class="btn btn-lime" href="https://playerapp.airsoftatlas.app">Open the Player App</a>
+          <a class="btn btn-ghost" href="https://ownerapp.airsoftatlas.app">Open the Owners App</a>
+        </div>
+      </div>
+
+      <a class="hero-scroll" href="#fields" aria-label="Scroll to fields">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- ================= CALLOUT TICKER ================= -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track" id="tickerA">
+        <span>Call your hits</span><i></i><span>Eye pro on</span><i></i><span>Chrono before you play</span><i></i><span>Barrel bags on</span><i></i><span>Mags out in the safe zone</span><i></i><span>Hit!</span><i></i><span>Medic!</span><i></i><span>Game on in five</span><i></i>
+      </div>
     </div>
-      <script src="nav.js"></script>
-  </body>
+
+    <!-- ================= FIELDS / MAP ================= -->
+    <section class="section fields" id="fields">
+      <div class="wrap fields-grid">
+        <div class="fields-copy">
+          <h2 class="title">Every field.<br />One map.</h2>
+          <p class="lede">
+            Search, filter, and browse fields and events on a live map, with real hours, rules,
+            amenities, and rental info from each field.
+          </p>
+          <dl class="stats">
+            <div><dt>Fields listed</dt><dd><span data-count="341" id="statFields">341</span></dd></div>
+            <div><dt>States covered</dt><dd><span data-count="48" id="statStates">48</span></dd></div>
+          </dl>
+          <p class="readout" id="stateReadout" aria-live="polite">Pick a state to see how many fields are listed.</p>
+        </div>
+        <div class="statemap" id="stateMap" data-parallax="0.06" role="group" aria-label="Fields listed by state">
+          <div class="sweep" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PLAYERS ================= -->
+    <section class="section players" id="players">
+      <div class="wrap split">
+        <div class="split-media" data-parallax="0.1">
+          <div class="phone" data-tilt="-1">
+            <video class="phone-video" muted loop playsinline preload="none" poster="media/players-promo.jpg" data-src="media/players-promo.mp4"></video>
+            <button class="sound" type="button" aria-pressed="false">Sound on</button>
+          </div>
+        </div>
+        <div class="split-copy">
+          <h2 class="title">Gear up.<br />Book in.<br />Game on.</h2>
+          <p class="lede">Everything you need to find your next game, all in one place.</p>
+          <ul class="kit">
+            <li><h3>Discover real fields and events</h3><p>Search, filter, and browse on a live map.</p></li>
+            <li><h3>Book your spot</h3><p>See live capacity, book in the app, and know who else is going.</p></li>
+            <li><h3>Sign waivers in the app</h3><p>Field-specific liability waivers you read and e-sign before you play. No paper, no forgetting.</p></li>
+            <li><h3>Join a team</h3><p>Create or join a team, see the roster, set a home field, and rep your clan.</p></li>
+            <li><h3>Connect with other players</h3><p>Search by callsign, view profiles and patches, and add friends.</p></li>
+          </ul>
+          <a class="btn btn-lime" href="https://playerapp.airsoftatlas.app">Open the Player App</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PATCHES ================= -->
+    <section class="section patches" id="patches">
+      <div class="wrap patches-grid">
+        <div class="patch-stage" aria-hidden="true">
+          <img class="patch patch-a" src="img/patch-across-the-atlas.webp" alt="" width="640" height="640" loading="lazy" data-parallax="0.09" data-rotate="-22" />
+          <img class="patch patch-b" src="img/patch-atlas.webp" alt="" width="640" height="640" loading="lazy" data-parallax="-0.06" data-rotate="28" />
+        </div>
+        <div class="patches-copy">
+          <h2 class="title">Earn every patch.</h2>
+          <p class="lede">
+            Collect a digital patch for the events you attend. It lands the moment you check in.
+            Build a collection, feature your favorite next to your callsign, and show off your history.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OLD WAY VS ATLAS ================= -->
+    <section class="section versus" id="gameday">
+      <div class="wrap">
+        <h2 class="title">Same Saturday.<br />Two fields.</h2>
+        <p class="lede">One runs on paper, a clipboard, and a cash box. The other runs on Atlas.</p>
+
+        <div class="versus-grid">
+          <ol class="timeline" id="timeline">
+            <li class="tl-head" aria-hidden="true"><span></span><span class="old">The old way</span><span class="new">On Atlas</span></li>
+            <li><time>0700</time><h3>Bookings</h3><p class="old">Missed calls and “is there a game Saturday?” texts.</p><p class="new">Spots reserved and prepaid in the app.</p></li>
+            <li><time>0800</time><h3>Waivers</h3><p class="old">A stack of paper to hand out, collect, and file.</p><p class="new">E-signed on their phone before they arrive.</p></li>
+            <li><time>0845</time><h3>The gate</h3><p class="old">A line, a clipboard, and guesswork.</p><p class="new">Scan the QR. Signed, booked, paid. Next.</p></li>
+            <li><time>0900</time><h3>Payment</h3><p class="old">Counting the cash box and chasing screenshots.</p><p class="new">Paid before they arrive. Payouts through Stripe.</p></li>
+            <li><time>1700</time><h3>After the game</h3><p class="old">Who actually showed up?</p><p class="new">Every player on record, in a live roster.</p></li>
+          </ol>
+          <div class="versus-media" data-parallax="0.08">
+            <div class="phone" data-tilt="1">
+              <video class="phone-video" muted loop playsinline preload="none" poster="media/old-way-vs-atlas.jpg" data-src="media/old-way-vs-atlas.mp4"></video>
+              <button class="sound" type="button" aria-pressed="false">Sound on</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OWNERS ================= -->
+    <section class="section owners" id="owners">
+      <div class="wrap split split-rev">
+        <div class="split-copy">
+          <h2 class="title">Your field is already on the map.</h2>
+          <p class="lede">
+            Claim it. Booking, waivers, check-in, and payouts in one app, with real players actually showing up.
+            Verified instantly if your field has a listed website, or reviewed manually if it doesn't.
+          </p>
+
+          <div class="phase">
+            <h3 class="phase-name">Before game day</h3>
+            <ul class="kit kit-tight">
+              <li><h4>Full field profile control</h4><p>Hours, amenities, rules, chrono limits, rental gear, and a photo gallery.</p></li>
+              <li><h4>Digital waivers</h4><p>Players sign once, on their phone. No paper stacks, no separate waiver subscription.</p></li>
+              <li><h4>Event creation</h4><p>Publish a game in minutes. Save drafts, duplicate past events, and get a heads-up if a nearby field has a big game the same day.</p></li>
+            </ul>
+          </div>
+          <div class="phase">
+            <h3 class="phase-name">At the gate</h3>
+            <ul class="kit kit-tight">
+              <li><h4>QR check-in</h4><p>One code proves they're signed, booked, and paid. The camera stays open, one scan after another.</p></li>
+              <li><h4>Live roster</h4><p>A searchable roster that updates as players check in.</p></li>
+            </ul>
+          </div>
+          <div class="phase">
+            <h3 class="phase-name">For your field</h3>
+            <ul class="kit kit-tight">
+              <li><h4>Automatic payouts</h4><p>No payment processor of your own to set up. Atlas runs every payment through Stripe.</p></li>
+              <li><h4>Digital patches</h4><p>Attach a patch to an event and it's granted when a player checks in. A reason to come back.</p></li>
+              <li><h4>Real numbers, not vanity stats</h4><p>Published events, total interest, bookings, and waiver signatures.</p></li>
+              <li><h4>Player bans</h4><p>Ban a problem player from your field, right from your roster.</p></li>
+              <li><h4>Built to scale</h4><p>One field or several locations, under one account.</p></li>
+              <li><h4>Direct support</h4><p>Reach the team in our Discord. Real answers, not a ticket queue.</p></li>
+            </ul>
+          </div>
+          <div class="cta-row">
+            <a class="btn btn-lime" href="https://ownerapp.airsoftatlas.app">Open the Owners App</a>
+            <a class="btn btn-ghost" href="#pricing">See pricing</a>
+          </div>
+        </div>
+        <div class="split-media split-sticky" data-parallax="0.06">
+          <div class="phone" data-tilt="1">
+            <video class="phone-video" muted loop playsinline preload="none" poster="media/owners-promo.jpg" data-src="media/owners-promo.mp4"></video>
+            <button class="sound" type="button" aria-pressed="false">Sound on</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap organizers" id="organizers">
+        <h3 class="subtitle">Running ops at venues you don't own?</h3>
+        <p class="lede">
+          You don't need to claim a field. Tell Atlas you organize events when you sign up,
+          and the app sets itself up around your events.
+        </p>
+        <ul class="kit kit-row">
+          <li><h4>No field required</h4><p>Enter the venue on each event. Type it in, or copy it from the Atlas field directory.</p></li>
+          <li><h4>The same game-day tools</h4><p>Online booking and payment, digital waivers, QR check-in, and a live roster.</p></li>
+          <li><h4>Payouts through Stripe</h4><p>Connect Stripe once and your ticket revenue is paid out automatically.</p></li>
+          <li><h4>Own a field too?</h4><p>One account covers both, from the same app.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= PROOF ================= -->
+    <section class="section proof" id="proof">
+      <div class="wrap split">
+        <div class="split-media" data-parallax="0.1">
+          <div class="phone" data-tilt="-1">
+            <video class="phone-video" muted loop playsinline preload="none" poster="media/compound-feedback.jpg" data-src="media/compound-feedback.mp4"></video>
+            <button class="sound" type="button" aria-pressed="false">Sound on</button>
+          </div>
+        </div>
+        <div class="split-copy">
+          <p class="stamp">Oct 24, 2026 &nbsp;/&nbsp; The Compound Airsoft, Auburn, MI</p>
+          <h2 class="title">The first event ever run on Atlas.</h2>
+          <dl class="stats stats-wide">
+            <div><dt>Prepaid</dt><dd><span data-count="41">41</span></dd></div>
+            <div><dt>Walk-ons</dt><dd><span data-count="8">8</span></dd></div>
+            <div><dt>Check-in success</dt><dd><span data-count="100">100</span>%</dd></div>
+          </dl>
+          <figure class="quote">
+            <blockquote>“Made everything very easy! Highly recommend!”</blockquote>
+            <figcaption>Player, The Compound Open Play</figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“It was perfect. Seamless and quick!”</blockquote>
+            <figcaption>Player, The Compound Open Play</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRICING ================= -->
+    <section class="section pricing" id="pricing">
+      <div class="wrap">
+        <h2 class="title title-xl"><span class="zero">$0</span> per month.<br />Always.</h2>
+        <p class="lede">
+          No subscription, no tier, no field limit. Atlas only makes money when a player books a spot:
+          a small platform fee on that one ticket. Field owners choose who pays it.
+        </p>
+
+        <div class="calc">
+          <label class="calc-label" for="ticket">Ticket price <output id="ticketOut" for="ticket">$20</output></label>
+          <input type="range" id="ticket" min="5" max="250" step="1" value="20" />
+          <div class="plans">
+            <article class="plan">
+              <h3>Pass fee to player</h3>
+              <p class="plan-note">Default for field owners. The fee is added at checkout and you keep 100% of your listed price.</p>
+              <dl>
+                <div><dt>Player pays</dt><dd id="passPlayer">$22.00</dd></div>
+                <div><dt>You keep</dt><dd id="passKeep" class="win">$20.00</dd></div>
+              </dl>
+              <p class="plan-fee">3.5% + $1.30, capped at $5 for field owners</p>
+            </article>
+            <article class="plan">
+              <h3>Absorb fee as field</h3>
+              <p class="plan-note">Players pay your exact listed price. No added line item at checkout.</p>
+              <dl>
+                <div><dt>Player pays</dt><dd id="absPlayer">$20.00</dd></div>
+                <div><dt>You net</dt><dd id="absKeep" class="win">$18.00</dd></div>
+              </dl>
+              <p class="plan-fee">3.5% + $1.30, capped at $5 for field owners</p>
+            </article>
+            <article class="plan">
+              <h3>Event organizer</h3>
+              <p class="plan-note">The fee comes out of your payout, so players pay your exact listed price.</p>
+              <dl>
+                <div><dt>Player pays</dt><dd id="orgPlayer">$20.00</dd></div>
+                <div><dt>You net</dt><dd id="orgKeep" class="win">$18.00</dd></div>
+              </dl>
+              <p class="plan-fee">3.5% + $1.30 per ticket, no cap</p>
+            </article>
+          </div>
+          <p class="calc-foot">
+            Free events and RSVPs never carry a fee. Unlimited fields and events, still $0 per month.
+            Choosing who pays is a one-time choice when you set up your field.
+          </p>
+        </div>
+        <a class="btn btn-navy" href="https://ownerapp.airsoftatlas.app">Claim your field</a>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section about" id="about">
+      <div class="wrap about-grid">
+        <h2 class="title">Airsoft has never really had infrastructure.</h2>
+        <div class="about-copy">
+          <p>
+            Fields run game day on paper waivers, a clipboard at the gate, and a Venmo screenshot for payment.
+            Players sign the same liability waiver over and over, show up not knowing if a field is even open
+            that day, and walk away with no record of the games they've played.
+          </p>
+          <p>
+            Atlas is the operational layer underneath all of that: waivers players e-sign once, event booking
+            with real live capacity, QR check-in at the gate instead of a clipboard, and payouts that land with
+            the field automatically.
+          </p>
+          <p>
+            Everything underneath is real. Hours, rules, and events are kept current by the field owners
+            themselves. No filler, no invented stats.
+          </p>
+          <p class="about-origin">Started in Michigan, built to grow field by field, state by state.</p>
+          <p class="veteran">🇺🇸 A Veteran Owned Company</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FINAL CTA ================= -->
+    <section class="section final" id="go">
+      <div class="final-word" aria-hidden="true" data-parallax="-0.18">Game on</div>
+      <div class="wrap final-grid">
+        <a class="door" href="https://playerapp.airsoftatlas.app">
+          <span class="door-who">For players</span>
+          <span class="door-do">Find your next op</span>
+          <span class="door-go">Open the Player App</span>
+        </a>
+        <a class="door" href="https://ownerapp.airsoftatlas.app">
+          <span class="door-who">For field owners &amp; event organizers</span>
+          <span class="door-do">Claim your field</span>
+          <span class="door-go">Open the Owners App</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <img src="img/atlas-mark.webp" alt="Atlas" width="72" height="72" loading="lazy" />
+      <p>Questions or feedback? <a href="https://discord.gg/4FFyd2qAs">Join our Discord</a>. It's the fastest way to reach us.</p>
+      <p class="footer-small">🇺🇸 A Veteran Owned Company</p>
+    </div>
+  </footer>
+
+  <script src="site.js?v=1" defer></script>
+</body>
 </html>
