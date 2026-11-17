@@ -101,10 +101,7 @@
       if (p < 1) requestAnimationFrame(step);
     })(t0);
   }
-  var hudF = $("#hudFields"), hudS = $("#hudStates");
-  hudF.dataset.pad = 3; hudS.dataset.pad = 2;
   $("#statFields").dataset.count = totalFields; $("#statStates").dataset.count = totalStates;
-  setTimeout(function () { countUp(hudF, totalFields, 1600); countUp(hudS, totalStates, 1600); }, 500);
 
   /* ---------- In-view observers ---------- */
   var io = new IntersectionObserver(function (entries) {
@@ -166,7 +163,7 @@
       out.textContent = "$" + p;
       $("#passPlayer").textContent = money(p + fo); $("#passKeep").textContent = money(p);
       $("#absPlayer").textContent = money(p); $("#absKeep").textContent = money(p - fo);
-      $("#orgPlayer").textContent = money(p); $("#orgKeep").textContent = money(p - fg);
+      $("#orgPlayer").textContent = money(p + fg); $("#orgKeep").textContent = money(p); $("#orgAbsorb").textContent = money(p - fg);
       input.style.setProperty("--fill", ((p - input.min) / (input.max - input.min)) * 100 + "%");
     }
     input.addEventListener("input", update); update();
