@@ -9,3 +9,4 @@ Redesign of airsoftatlas.app: a single scrolling page (`index.html`, `site.css`,
 - The pricing calculator in `site.js` repeats the fee formula (3.5% + $1.30, $5 cap for field owners). Update it if fees change. The organizer card describes pass-to-player as the default with absorb as an option (changed 2026-11-16, ahead of the backend: see `claude/atlas-organizer-fee-model-scope.md`).
 
 Preview locally: `python3 -m http.server 8000` in this folder, then open http://localhost:8000
+- The trading-card section (`#cards`) is labelled "Coming soon" because cards are still beta-only in the player app (2026-11-20). Its rank thresholds copy `RANK_TABLES` in `atlas-players-app/functions/cards.js`; update both together. The card front uses Michael's photo (`img/card-founder.webp`, cropped from his image supplied 2026-11-20).

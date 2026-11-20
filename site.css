@@ -30,7 +30,7 @@ body {
   font-family: var(--body);
   font-size: 17px;
   line-height: 1.55;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 img, video, canvas, svg { display: block; max-width: 100%; }
@@ -339,6 +339,75 @@ input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius
 .footer p { color: var(--mist); font-size: 15px; }
 .footer a { color: var(--bone); text-underline-offset: 3px; }
 .footer-small { margin-left: auto; }
+
+/* ---------- Trading cards ---------- */
+.cards { overflow-x: clip; }
+.cards-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(36px, 7vw, 104px); align-items: start; }
+.cards-stage { display: flex; flex-direction: column; align-items: center; perspective: 1600px; position: sticky; top: max(96px, calc(50vh - 280px)); }
+.tcard {
+  --ry: -18deg; --rx: 4deg;
+  position: relative; width: min(100%, 340px); aspect-ratio: 5 / 7;
+  transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry));
+  cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+  will-change: transform;
+}
+.tcard.is-dragging { cursor: grabbing; }
+.tcard-face {
+  position: absolute; inset: 0; border-radius: 22px; padding: 11px;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden;
+  background: linear-gradient(135deg, #e8fbff 0%, #9be7ff 28%, #f4f0ff 55%, #b9c8ff 78%, #e8fbff 100%);
+  box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 90px rgba(155,231,255,0.18);
+}
+.tcard-back { transform: rotateY(180deg); }
+.tcard-in { position: relative; height: 100%; border-radius: 14px; overflow: hidden; background: #0A2236; }
+.tcard-photo { position: absolute; inset: 0; background: #0b2438; }
+.tcard-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; pointer-events: none; }
+.tcard-front .tcard-in::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,12,22,0.92) 0%, rgba(0,12,22,0) 46%); }
+.tcard-badge { position: absolute; z-index: 2; top: 14px; left: 14px; padding: 6px 13px; border-radius: 999px; font: 700 12px var(--body); letter-spacing: 0.12em; text-transform: uppercase; color: #0b1f4d; background: linear-gradient(135deg, #e8fbff, #9be7ff 60%, #f4f0ff); }
+.tcard-call { position: absolute; z-index: 2; left: 18px; bottom: 16px; font-family: var(--display); font-weight: 800; font-size: clamp(48px, 6vw, 62px); line-height: 0.9; text-transform: uppercase; color: var(--bone); }
+.tcard-fabric {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(-45deg, rgba(0,0,0,0.18) 0 2px, transparent 2px 6px),
+    radial-gradient(100% 80% at 50% 40%, #12406a 0%, #0A2A45 60%, #071C2E 100%);
+}
+.tcard-fabric::before { content: ""; position: absolute; inset: 9px; border-radius: 8px; border: 2px dashed rgba(214,244,255,0.55); pointer-events: none; }
+.tcard-fabric img { width: 66%; height: auto; filter: drop-shadow(0 8px 10px rgba(0,0,0,0.5)); }
+.tcard-word { font-family: var(--display); font-weight: 700; font-size: 34px; letter-spacing: 0.32em; margin-right: -0.32em; text-transform: uppercase; color: #EAF6FF; }
+.tcard-ed { position: absolute; bottom: 22px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(214,244,255,0.75); }
+.tcard-holo { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: screen; opacity: 0.32;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.55) 45%, rgba(155,231,255,0.35) 52%, transparent 66%);
+  background-size: 260% 100%; background-position: var(--sheen, 50%) 0; }
+.cards-hint { margin-top: 26px; font-size: 14px; color: var(--mist); }
+
+.soon { display: inline-block; font-weight: 600; font-size: 15px; color: var(--ink); background: var(--lime); padding: 5px 12px; border-radius: 4px; margin-bottom: 20px; }
+.ladder-title { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 30px; line-height: 1; margin-top: 44px; }
+.ladder-note { color: var(--mist); font-size: 16px; margin-top: 10px; max-width: 34em; }
+.ladder { margin-top: 22px; border-top: 1px solid var(--line); }
+.ladder li { position: relative; display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 4px 18px; align-items: baseline; padding: 12px 0 12px 18px; border-bottom: 1px solid var(--line); }
+.ladder li::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 4px; border-radius: 2px; background: var(--rk); transform-origin: bottom; }
+.ladder b { font-family: var(--display); font-weight: 700; font-size: 24px; text-transform: uppercase; line-height: 1; color: var(--rk); }
+.ladder span { font-size: 15px; color: #C6D3DE; }
+.ladder-gift span { color: var(--mist); font-style: italic; }
+.ladder-foot { font-size: 14px; color: var(--mist); margin-top: 14px; }
+.js .ladder li { opacity: 0.25; transition: opacity 0.4s calc(var(--i) * 90ms); }
+.js .ladder li::before { transform: scaleY(0); transition: transform 0.45s calc(var(--i) * 90ms + 80ms) cubic-bezier(0.2, 1.4, 0.4, 1); }
+.js .ladder.is-in li { opacity: 1; }
+.js .ladder.is-in li::before { transform: scaleY(1); }
+
+@media (max-width: 900px) {
+  .cards-grid { grid-template-columns: minmax(0, 1fr); }
+  .cards-stage { position: static; }
+  .tcard { width: min(72vw, 300px); }
+}
+@media (max-width: 560px) {
+  .ladder li { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .ladder li { opacity: 1; }
+  .js .ladder li::before { transform: none; }
+}
 
 /* ---------- Mag scroll meter ---------- */
 .mag { position: fixed; right: 14px; bottom: 18px; z-index: 40; display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; font-family: var(--mono); font-size: 11px; color: var(--mist); padding: 8px 6px; border-radius: 8px; background: rgba(0,21,35,0.6); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid var(--line); opacity: 0; transform: translateY(12px); transition: opacity 0.3s, transform 0.3s; pointer-events: none; }

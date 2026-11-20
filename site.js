@@ -118,6 +118,26 @@
   }, { rootMargin: "0px 0px -38% 0px", threshold: 0.2 });
   $$("#timeline li:not(.tl-head)").forEach(function (li) { hitIO.observe(li); });
 
+  /* ---------- Trading card: scroll spin + drag to spin ---------- */
+  var tcard = $("#tcard"), tStage = $("#cardStage"), tSec = $("#cards"), tDrag = 0, tDragging = false, tStartX = 0, tStartDrag = 0, tMid = 0, tSecTop = 0, tSecH = 1;
+  function smooth(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+  $$("#ladder li").forEach(function (li, i) { li.style.setProperty("--i", i); });
+  io.observe($("#ladder"));
+  function setCard(ry, rx) {
+    tcard.style.setProperty("--ry", ry.toFixed(1) + "deg");
+    tcard.style.setProperty("--rx", rx.toFixed(1) + "deg");
+    var a = ((ry % 360) + 360) % 360;
+    tcard.style.setProperty("--sheen", (100 - (a % 180) / 1.8).toFixed(1) + "%");
+  }
+  tcard.addEventListener("pointerdown", function (e) {
+    tDragging = true; tStartX = e.clientX; tStartDrag = tDrag; tcard.classList.add("is-dragging");
+    if (tcard.setPointerCapture) tcard.setPointerCapture(e.pointerId);
+  });
+  tcard.addEventListener("pointermove", function (e) { if (tDragging) tDrag = tStartDrag + (e.clientX - tStartX) * 0.6; });
+  ["pointerup", "pointercancel", "lostpointercapture"].forEach(function (ev) {
+    tcard.addEventListener(ev, function () { tDragging = false; tcard.classList.remove("is-dragging"); });
+  });
+
   /* ---------- Videos: load + play only while on screen ---------- */
   var vio = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
@@ -248,6 +268,7 @@
     par = $$("[data-parallax]").map(function (el) {
       return { el: el, s: +el.dataset.parallax, rot: el.dataset.rotate ? +el.dataset.rotate : 0, mid: pageTop(el) + el.offsetHeight / 2 };
     });
+    tMid = pageTop(tStage) + tStage.offsetHeight / 2; tSecTop = pageTop(tSec); tSecH = Math.max(1, tSec.offsetHeight);
     phones = $$(".phone").map(function (el) { return { el: el, dir: +el.dataset.tilt || 1, mid: pageTop(el) + el.offsetHeight / 2 }; });
     layers.forEach(function (l) { l.el.style.height = Math.ceil(vh + maxScroll * l.speed + 200) + "px"; });
     sizeCanvas();
@@ -296,6 +317,16 @@
       mag.classList.toggle("is-live", y > vh * 0.5);
       rangeEl.textContent = ("00" + Math.min(999, Math.round(y / 12))).slice(-3);
       lastY = y;
+    }
+
+    /* card: on desktop it is pinned beside the copy, shows its front while the intro is read and
+       flips to the patch back as the ladder comes up; on phones it flips as it scrolls up the screen.
+       Dragging adds on top; a slow idle sway keeps it alive. */
+    var sp = (y + vh / 2 - tSecTop) / tSecH;
+    if (sp > -0.6 && sp < 1.6) {
+      var flip = reduce ? 0 : (small ? smooth(0.05, 0.4, (y + vh / 2 - tMid) / vh) : smooth(0.4, 0.58, sp)) * 180;
+      var sway = reduce || tDragging ? 0 : Math.sin(now / 1700) * 7;
+      setCard(-14 + flip + sway + tDrag, reduce ? 4 : 4 + Math.cos(now / 2300) * 2);
     }
 
     if (!reduce) {
