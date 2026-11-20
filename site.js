@@ -127,6 +127,7 @@
     tcard.style.setProperty("--ry", ry.toFixed(1) + "deg");
     tcard.style.setProperty("--rx", rx.toFixed(1) + "deg");
     var a = ((ry % 360) + 360) % 360;
+    tcard.classList.toggle("is-back", a > 90 && a < 270);
     tcard.style.setProperty("--sheen", (100 - (a % 180) / 1.8).toFixed(1) + "%");
   }
   tcard.addEventListener("pointerdown", function (e) {

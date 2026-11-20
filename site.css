@@ -358,7 +358,12 @@ input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius
   background: linear-gradient(135deg, #e8fbff 0%, #9be7ff 28%, #f4f0ff 55%, #b9c8ff 78%, #e8fbff 100%);
   box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 90px rgba(155,231,255,0.18);
 }
-.tcard-back { transform: rotateY(180deg); }
+.tcard-front { transform: rotateY(0deg) translateZ(1px); }
+.tcard-back { transform: rotateY(180deg) translateZ(1px); }
+.tcard-face * { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+/* Belt and braces: some browsers (Safari especially) still paint the far face
+   through the near one, so the script also hides whichever face points away. */
+.tcard.is-back .tcard-front, .tcard:not(.is-back) .tcard-back { visibility: hidden; }
 .tcard-in { position: relative; height: 100%; border-radius: 14px; overflow: hidden; background: #0A2236; }
 .tcard-photo { position: absolute; inset: 0; background: #0b2438; }
 .tcard-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; pointer-events: none; }
@@ -376,7 +381,7 @@ input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; border-radius
 .tcard-fabric img { width: 66%; height: auto; filter: drop-shadow(0 8px 10px rgba(0,0,0,0.5)); }
 .tcard-word { font-family: var(--display); font-weight: 700; font-size: 34px; letter-spacing: 0.32em; margin-right: -0.32em; text-transform: uppercase; color: #EAF6FF; }
 .tcard-ed { position: absolute; bottom: 22px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(214,244,255,0.75); }
-.tcard-holo { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: screen; opacity: 0.32;
+.tcard-holo { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0.22;
   background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.55) 45%, rgba(155,231,255,0.35) 52%, transparent 66%);
   background-size: 260% 100%; background-position: var(--sheen, 50%) 0; }
 .cards-hint { margin-top: 26px; font-size: 14px; color: var(--mist); }
