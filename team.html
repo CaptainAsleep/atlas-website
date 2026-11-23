@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#001523" />
+    <title>Your Team — Atlas</title>
+    <meta name="description" content="Manage your team on Atlas." />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
+    <link rel="stylesheet" href="styles.css?v=2" />
+    <style>
+      .tm-card { background:#FFFFFF; border-radius:14px; padding:28px 24px; margin:0 0 16px; box-shadow:0 1px 2px rgba(0,44,72,.06), 0 8px 24px -12px rgba(0,44,72,.18); text-align:center; }
+      .tm-eyebrow { font-family:'IBM Plex Mono','Courier New',monospace; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#686C72; margin:0 0 8px; }
+      .tm-card h1 { font-family:'Space Grotesk',sans-serif; font-size:26px; margin:0 0 10px; color:#002C48; }
+      .tm-card p { margin:0 0 18px; color:#4E5257; line-height:1.6; }
+      .tm-btn { display:block; width:100%; border:2px solid transparent; cursor:pointer; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:16px; padding:14px; border-radius:999px; margin:0 0 10px; }
+      .tm-btn:disabled { opacity:.5; cursor:default; }
+      .tm-primary { background:#1554B8; color:#FFFFFF; box-shadow:0 8px 20px -6px rgba(21,84,184,.5); }
+      .tm-danger { background:#B3261E; color:#FFFFFF; box-shadow:0 8px 20px -6px rgba(179,38,30,.45); }
+      .tm-ghost { background:#FFFFFF; color:#1554B8; border-color:#D6DEEA; }
+      .tm-error { color:#B3261E; font-size:14px; margin:10px 0 0; min-height:20px; }
+      [hidden] { display:none !important; }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="system.css?v=1" />
+  </head>
+  <body>
+    <nav class="nav">
+      <a class="nav-brand" href="index.html">
+        <img src="img/atlas-mark.webp" alt="Atlas" />
+        <span>Atlas</span>
+      </a>
+    </nav>
+
+    <div class="wrap">
+      <div id="tm-loading" class="center"><p class="tagline">Loading&hellip;</p></div>
+
+      <div id="tm-msg" class="tm-card" hidden>
+        <p class="tm-eyebrow">Atlas Teams</p>
+        <h1 id="tm-msg-title"></h1>
+        <p id="tm-msg-body"></p>
+        <a class="tm-btn tm-ghost" href="https://playerapp.airsoftatlas.app" id="tm-open-app" style="text-decoration:none;">Open Atlas</a>
+      </div>
+
+      <div id="tm-choose" class="tm-card" hidden>
+        <p class="tm-eyebrow">Atlas Teams</p>
+        <h1 id="tm-choose-title"></h1>
+        <p id="tm-choose-body"></p>
+        <button type="button" class="tm-btn tm-primary" id="tm-rejoin"></button>
+        <button type="button" class="tm-btn tm-danger" id="tm-delete">Delete this team</button>
+        <button type="button" class="tm-btn tm-ghost" id="tm-other" hidden></button>
+        <p class="tm-error" id="tm-error"></p>
+      </div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-functions.js";
+
+      // Same public-safe client config as feedback.html.
+      const app = initializeApp({
+        apiKey: "AIzaSyD4wCMF_drnENoRz6wkRRbdxyO9d2n2QFE",
+        authDomain: "atlas-players-app.firebaseapp.com",
+        projectId: "atlas-players-app",
+        storageBucket: "atlas-players-app.firebasestorage.app",
+        messagingSenderId: "211739354235",
+        appId: "1:211739354235:web:a6f20f9d2e13c409a96ede",
+      });
+      const fns = getFunctions(app);
+      const getOffer = httpsCallable(fns, "getEmptyTeamOffer");
+      const resolveTeam = httpsCallable(fns, "resolveEmptyTeam");
+
+      const $ = (id) => document.getElementById(id);
+      const params = new URLSearchParams(location.search);
+      const token = params.get("t");
+      let action = params.get("a") === "delete" ? "delete" : "rejoin";
+      let teamName = "your team";
+
+      function message(title, body, showApp = true) {
+        $("tm-loading").hidden = true; $("tm-choose").hidden = true;
+        $("tm-msg-title").textContent = title;
+        $("tm-msg-body").textContent = body;
+        $("tm-open-app").hidden = !showApp;
+        $("tm-msg").hidden = false;
+      }
+
+      // The email's two buttons both land here; the one they tapped is the
+      // primary action, with a quiet link to switch to the other.
+      function render() {
+        const isDelete = action === "delete";
+        $("tm-choose-title").textContent = isDelete ? `Delete ${teamName}?` : `Rejoin ${teamName}?`;
+        $("tm-choose-body").textContent = isDelete
+          ? `${teamName} will be removed from the Teams list for good. This can't be undone.`
+          : `You'll be back on ${teamName}'s roster as an officer, so you can approve new members again.`;
+        $("tm-rejoin").textContent = `Rejoin ${teamName}`;
+        $("tm-rejoin").hidden = isDelete;
+        $("tm-delete").hidden = !isDelete;
+        $("tm-other").hidden = false;
+        $("tm-other").textContent = isDelete ? `Actually, rejoin ${teamName} instead` : "Actually, delete this team instead";
+        $("tm-error").textContent = "";
+        $("tm-loading").hidden = true; $("tm-msg").hidden = true; $("tm-choose").hidden = false;
+      }
+
+      async function load() {
+        if (!token) return message("Link not found", "This link doesn't look right. Open it straight from the email Atlas sent you, or just reply to that email.", false);
+        try {
+          const { data } = await getOffer({ token });
+          teamName = data.teamName || teamName;
+          if (data.status === "used") {
+            return data.result === "deleted"
+              ? message("Team deleted", `${teamName} has already been removed from the Teams list.`)
+              : message("You're back in", `You've already rejoined ${teamName} as an officer.`);
+          }
+          if (data.status === "gone") return message("Team already removed", "This team no longer exists on Atlas.");
+          if (data.status === "expired") return message("This link has expired", "Reply to the email Atlas sent you and we'll sort it out.", false);
+          render();
+        } catch (_) {
+          message("Link not found", "This link doesn't look right. Open it straight from the email Atlas sent you, or just reply to that email.", false);
+        }
+      }
+
+      async function go(btn) {
+        const label = btn.textContent;
+        $("tm-rejoin").disabled = $("tm-delete").disabled = $("tm-other").disabled = true;
+        btn.textContent = action === "delete" ? "Deleting…" : "Rejoining…";
+        $("tm-error").textContent = "";
+        try {
+          const { data } = await resolveTeam({ token, action });
+          if (data.result === "deleted") message("Team deleted", `${teamName} has been removed from the Teams list.`);
+          else message("You're back in", `You're on ${teamName} again as an officer. Open Atlas, go to Social, then Teams to manage it.`);
+        } catch (err) {
+          $("tm-error").textContent = err?.message && err.code !== "functions/internal" ? err.message : "Couldn't do that. Check your connection and try again.";
+          btn.textContent = label;
+        } finally {
+          $("tm-rejoin").disabled = $("tm-delete").disabled = $("tm-other").disabled = false;
+        }
+      }
+
+      $("tm-rejoin").addEventListener("click", (e) => go(e.currentTarget));
+      $("tm-delete").addEventListener("click", (e) => go(e.currentTarget));
+      $("tm-other").addEventListener("click", () => { action = action === "delete" ? "rejoin" : "delete"; render(); });
+
+      load();
+    </script>
+  </body>
+</html>
